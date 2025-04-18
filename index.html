@@ -1,11 +1,36 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Payment%20via%20UPI%20QR" />
-    <title>Redirecting to UPI Payment...</title>
-  </head>
-  <body>
-    <p>If you are not redirected, <a href="upi://pay?pa=AEBC3769131392@SC&pn=American%20Express&am=2095&cu=INR&tn=Payment%20via%20UPI%20QR">click here</a>.</p>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <title>Pay with UPI</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+      background-color: #f9f9f9;
+    }
+    .button {
+      background-color: #28a745;
+      border: none;
+      color: white;
+      padding: 16px 32px;
+      text-align: center;
+      font-size: 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+  <h2>Pay ₹2095 to American Express</h2>
+  <p>Click the button below to open your UPI app</p>
+  <a class="button" href="upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Payment%20via%20UPI%20QR">
+    Pay Now
+  </a>
+</body>
 </html>
