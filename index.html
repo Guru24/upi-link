@@ -2,35 +2,52 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Pay with UPI</title>
+  <title>Choose User to Pay</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       text-align: center;
-      margin-top: 100px;
-      background-color: #f9f9f9;
+      padding-top: 50px;
+      background-color: #f4f4f4;
     }
     .button {
-      background-color: #28a745;
-      border: none;
+      display: inline-block;
+      margin: 10px;
+      padding: 15px 25px;
+      background-color: #007bff;
       color: white;
-      padding: 16px 32px;
-      text-align: center;
-      font-size: 18px;
+      border: none;
       border-radius: 8px;
+      font-size: 18px;
       cursor: pointer;
       text-decoration: none;
     }
     .button:hover {
-      background-color: #218838;
+      background-color: #0056b3;
     }
   </style>
 </head>
 <body>
-  <h2>Pay ₹2095 to American Express</h2>
-  <p>Click the button below to open your UPI app</p>
-  <a class="button" href="upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Payment%20via%20UPI%20QR">
-    Pay Now
-  </a>
+  <h2>Select User to Make Payment</h2>
+  <div id="buttons"></div>
+
+  <script>
+    const users = {
+      AB: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
+      CD: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
+      EF: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family"
+      // Add more here
+    };
+    
+    
+    const container = document.getElementById('buttons');
+    for (let username in users) {
+      const btn = document.createElement('a');
+      btn.className = 'button';
+      btn.href = users[username];
+      btn.textContent = username;
+      container.appendChild(btn);
+    }
+  </script>
 </body>
 </html>
