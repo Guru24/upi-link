@@ -10,85 +10,119 @@
       margin: 0;
       padding: 0;
       font-family: 'Inter', sans-serif;
-      background: #f2f4f8;
+      background: #f9fafb;
       color: #333;
     }
 
     h1 {
       text-align: center;
-      margin-top: 40px;
+      margin: 30px 0 10px;
+      font-size: 24px;
       color: #222;
     }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-      gap: 16px;
-      padding: 20px;
-      max-width: 500px;
-      margin: auto;
+    .search-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .search-container input {
+      width: 80%;
+      max-width: 400px;
+      padding: 10px 16px;
+      font-size: 16px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    .button-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      padding: 0 20px 40px;
     }
 
     .user-button {
+      width: 100%;
+      max-width: 400px;
       background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.06);
-      padding: 20px;
+      border-radius: 10px;
+      padding: 16px;
       text-align: center;
       font-size: 18px;
       font-weight: 600;
       color: #007bff;
       text-decoration: none;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      transition: background 0.2s, transform 0.2s ease;
     }
 
     .user-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.08);
       background-color: #eef4ff;
+      transform: translateY(-2px);
     }
 
     @media (max-width: 480px) {
-      .grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 12px;
-        padding: 16px;
+      h1 {
+        font-size: 20px;
+      }
+
+      .search-container input {
+        font-size: 15px;
       }
 
       .user-button {
         font-size: 16px;
-        padding: 16px;
-      }
-
-      h1 {
-        font-size: 22px;
-        margin-top: 30px;
+        padding: 14px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Choose a User to Pay</h1>
-  <div class="grid" id="buttonGrid"></div>
+  <h1>Send Payment</h1>
+
+  <div class="search-container">
+    <input type="text" id="search" placeholder="Search by username..." />
+  </div>
+
+  <div class="button-list" id="buttonList"></div>
 
   <script>
     const users = {
       AB: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
       CD: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
-      EF: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family"
+      EF: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
+      GH: "upi://pay?pa=ghuser@upi&pn=GH&am=400&cu=INR&tn=Payment for GH"
       // Add more users as needed
     };
 
-    const grid = document.getElementById('buttonGrid');
+    const buttonList = document.getElementById('buttonList');
+    const searchInput = document.getElementById('search');
 
-    for (const [username, link] of Object.entries(users)) {
-      const btn = document.createElement('a');
-      btn.href = link;
-      btn.className = 'user-button';
-      btn.textContent = username;
-      grid.appendChild(btn);
+    function renderButtons(filter = "") {
+      buttonList.innerHTML = ""; // clear list
+      const filteredUsers = Object.entries(users).filter(([username]) =>
+        username.toLowerCase().includes(filter.toLowerCase())
+      );
+      for (const [username, link] of filteredUsers) {
+        const btn = document.createElement('a');
+        btn.href = link;
+        btn.className = 'user-button';
+        btn.textContent = username;
+        buttonList.appendChild(btn);
+      }
     }
+
+    searchInput.addEventListener('input', (e) => {
+      renderButtons(e.target.value);
+    });
+
+    // Initial render
+    renderButtons();
   </script>
 
 </body>
