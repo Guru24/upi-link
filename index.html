@@ -3,60 +3,48 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Send Payment</title>
+  <title>Secure UPI Payment</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;700&display=swap" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: 'Inter', sans-serif;
-      background: #f9fafb;
+      background: #f2f4f8;
       color: #333;
+      text-align: center;
     }
 
     h1 {
-      text-align: center;
-      margin: 30px 0 10px;
+      margin: 40px 0 20px;
       font-size: 24px;
-      color: #222;
     }
 
     .search-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .search-container input {
       width: 80%;
       max-width: 400px;
-      padding: 10px 16px;
+      padding: 12px 18px;
       font-size: 16px;
       border-radius: 10px;
       border: 1px solid #ccc;
       box-shadow: 0 2px 4px rgba(0,0,0,0.04);
     }
 
-    .button-list {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      padding: 0 20px 40px;
-    }
-
     .user-button {
-      width: 100%;
-      max-width: 400px;
+      display: inline-block;
+      margin-top: 20px;
       background: white;
       border-radius: 10px;
-      padding: 16px;
-      text-align: center;
+      padding: 16px 32px;
       font-size: 18px;
       font-weight: 600;
       color: #007bff;
       text-decoration: none;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.06);
       transition: background 0.2s, transform 0.2s ease;
     }
 
@@ -68,28 +56,30 @@
     @media (max-width: 480px) {
       h1 {
         font-size: 20px;
+        margin-top: 30px;
       }
 
       .search-container input {
         font-size: 15px;
+        padding: 10px 14px;
       }
 
       .user-button {
         font-size: 16px;
-        padding: 14px;
+        padding: 14px 24px;
       }
     }
   </style>
 </head>
 <body>
 
-  <h1>Click on your User ID</h1>
+  <h1>Enter Your Username</h1>
 
   <div class="search-container">
-    <input type="text" id="search" placeholder="Search by user id..." />
+    <input type="text" id="search" maxlength="2" placeholder="e.g., AB" autocomplete="off" />
   </div>
 
-  <div class="button-list" id="buttonList"></div>
+  <div id="buttonContainer"></div>
 
   <script>
     const users = {
@@ -97,33 +87,27 @@
       CD: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
       EF: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
       GH: "upi://pay?pa=ghuser@upi&pn=GH&am=400&cu=INR&tn=Payment for GH"
-      // Add more users as needed
+      // Add more users here
     };
 
-    const buttonList = document.getElementById('buttonList');
     const searchInput = document.getElementById('search');
+    const buttonContainer = document.getElementById('buttonContainer');
 
-    function renderButtons(filter = "") {
-      buttonList.innerHTML = ""; // clear list
-      const filteredUsers = Object.entries(users).filter(([username]) =>
-        username.toLowerCase().includes(filter.toLowerCase())
-      );
-      for (const [username, link] of filteredUsers) {
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toUpperCase().trim();
+      buttonContainer.innerHTML = ''; // Clear previous button
+
+      if (users[query]) {
+        const link = users[query];
         const btn = document.createElement('a');
         btn.href = link;
         btn.className = 'user-button';
-        btn.textContent = username;
-        buttonList.appendChild(btn);
+        btn.textContent = `Pay ${query}`;
+        buttonContainer.appendChild(btn);
       }
-    }
-
-    searchInput.addEventListener('input', (e) => {
-      renderButtons(e.target.value);
     });
-
-    // Initial render
-    renderButtons();
   </script>
 
 </body>
 </html>
+
