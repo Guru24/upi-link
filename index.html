@@ -16,12 +16,12 @@
     }
 
     h1 {
-      margin: 40px 0 20px;
+      margin: 40px 0 10px;
       font-size: 24px;
     }
 
     .search-container {
-      margin-bottom: 30px;
+      margin-bottom: 10px;
     }
 
     .search-container input {
@@ -32,6 +32,13 @@
       border-radius: 10px;
       border: 1px solid #ccc;
       box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+    }
+
+    #errorMessage {
+      color: red;
+      font-size: 15px;
+      margin-top: 6px;
+      min-height: 22px;
     }
 
     .user-button {
@@ -77,6 +84,7 @@
 
   <div class="search-container">
     <input type="text" id="search" maxlength="2" placeholder="e.g., AB" autocomplete="off" />
+    <div id="errorMessage"></div>
   </div>
 
   <div id="buttonContainer"></div>
@@ -87,23 +95,28 @@
       CD: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
       EF: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
       GH: "upi://pay?pa=ghuser@upi&pn=GH&am=400&cu=INR&tn=Payment for GH"
-      // Add more users here
     };
 
     const searchInput = document.getElementById('search');
     const buttonContainer = document.getElementById('buttonContainer');
+    const errorMessage = document.getElementById('errorMessage');
 
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toUpperCase().trim();
-      buttonContainer.innerHTML = ''; // Clear previous button
+      buttonContainer.innerHTML = '';
+      errorMessage.textContent = '';
 
-      if (users[query]) {
-        const link = users[query];
-        const btn = document.createElement('a');
-        btn.href = link;
-        btn.className = 'user-button';
-        btn.textContent = `Pay ${query}`;
-        buttonContainer.appendChild(btn);
+      if (query.length === 2) {
+        if (users[query]) {
+          const link = users[query];
+          const btn = document.createElement('a');
+          btn.href = link;
+          btn.className = 'user-button';
+          btn.textContent = `Pay ${query}`;
+          buttonContainer.appendChild(btn);
+        } else {
+          errorMessage.textContent = "Enter a valid username";
+        }
       }
     });
   </script>
@@ -111,3 +124,13 @@
 </body>
 </html>
 
+
+
+
+<!--
+      RG: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
+      CD: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
+      EF: "upi://pay?pa=AEBC376913139251003@SC&pn=American%20Express&am=2095&cu=INR&tn=Lending%20Friend%20Family",
+      GH: "upi://pay?pa=ghuser@upi&pn=GH&am=400&cu=INR&tn=Payment for GH"
+
+-->
